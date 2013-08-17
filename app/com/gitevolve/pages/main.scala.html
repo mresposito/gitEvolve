@@ -1,0 +1,51 @@
+@(title: String, javascript: Html = Html(""))(content: Html)
+<!DOCTYPE html>
+<html lang="en_us">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>@title</title>
+    <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("img/favicon.png")">
+    <!-- Bootstrap -->
+    <link href="@routes.Assets.at("css/bootstrap.min.css")" rel="stylesheet" media="screen">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/main.min.css")">
+  </head>
+
+<body>
+  <!-- Navbar ================================================== -->
+
+  <div id="bodyWrap">
+
+  <div class="header">
+    <div class="container">
+      <a class="homeLink" href="/">
+        <span class="micheler">Git Evolve</span>
+      </a>
+    </div>
+  </div>
+  <!-- end navbar -->
+
+    <div class="realBody">
+      @content
+    </div>
+  </div> <!-- end bodyWrap -->
+
+  <div id="footer">
+    <div class="air"></div>
+    <div class="container text-right">
+      <span "findMe">Created by
+        <a href="http://www.micheleresposito.com">
+          Michele R. Esposito
+        </a>
+      </span>
+    </div>
+  </div><!-- end footer -->
+</body>
+
+<!-- Le Javascript ================================================== -->
+
+@_jsLibraries(javascript)
+  
+</html>

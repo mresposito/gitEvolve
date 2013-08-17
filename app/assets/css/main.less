@@ -1,0 +1,83 @@
+@import "font.less";
+@import "_colors.less";
+
+/**
+ * Constants
+ */
+@headerFontSize: 60px;
+
+* {
+  font-family: titillium;
+  font-weight: 300;
+  line-height: 25px;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-family: museo300;
+}
+
+body {
+  background-color: black!important;
+}
+
+#bodyWrap {
+  margin-top: 10px;
+  background: none repeat scroll 1% 0% @background!important; 
+}
+
+.realBody {
+  color: white
+  display: block;
+  position: relative;
+  margin-top: 5%;
+}
+
+.makeGradient(@color, @desat) {
+
+  background: @color;
+  background-image: linear-gradient(to bottom, @color, desaturate(@color, @desat));
+  background-repeat: repeat-x;
+}
+
+.header{
+  .makeGradient(@headerBar, 10%)
+}
+
+.headerShadow(@color) {
+  text-shadow: 2px 2px 1px @color;
+}
+
+.header {
+  box-shadow: 0px 2px 18px (@background + 40);
+  top: 30px;
+  position: relative;
+  text-align: center;
+  line-height: 0px!important;
+  span {
+    display: inline-block;
+    margin: 35px 0px 25px 0px;
+    color: black;
+  }
+  .homeLink {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  span {
+    .headerShadow(@details)
+  }
+  .micheler {
+    font-family: museo300;
+    font-size: @headerFontSize;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+/**
+* Other pages 
+*/
+@import "footer.less";
+@import "index.less";

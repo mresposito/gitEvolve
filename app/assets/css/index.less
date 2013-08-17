@@ -1,0 +1,37 @@
+@import "_colors.less";
+
+@formHeight: 33px;
+
+.indexInfo {
+  width: 500px!important;
+  float: auto;
+  margin: 0 auto;
+  font-size: @formHeight;
+  border-radius: 4px;
+  margin-top: 10%;
+  padding: 20px;
+  color: @textColor;
+  line-height: @formHeight - 3;
+
+  input {
+
+    border-radius: 0px;
+    height: @formHeight;
+    border: none;
+    background-color: @formsBackground;
+    margin: 0px -3px;
+    font-size: @formHeight - 3;
+    font-weight: 400;
+    line-height: @formHeight - 3;
+
+    &:hover {
+
+      background-color: #ff994d !important;
+    }
+
+    &:focus {
+
+      background-color: #ff994d !important;
+    }
+  }
+}

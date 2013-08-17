@@ -1,0 +1,10 @@
+@js = {
+  @helper.requireJs(core = routes.Assets.at("js/require.js").url, module = routes.Assets.at("js/app.min").url)
+}
+
+@main("Git Evolve", js) {
+
+  <div class="container indexInfo">
+    <input class="username" type="text" placeholder="username"> / <input class="repo" type="text" placeholder="repository">
+  </div>
+}
