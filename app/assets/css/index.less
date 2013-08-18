@@ -1,6 +1,7 @@
 @import "_colors.less";
 
-@formHeight: 33px;
+@formHeight: 35px;
+@textSize: @formHeight - 8;
 
 .indexInfo {
   width: 500px!important;
@@ -8,8 +9,7 @@
   margin: 0 auto;
   font-size: @formHeight;
   border-radius: 4px;
-  margin-top: 10%;
-  padding: 20px;
+  padding: 10px;
   color: @textColor;
   line-height: @formHeight - 3;
 
@@ -19,6 +19,18 @@
     color: #b94a48;
     background-color: #f2dede;
     width: 83%;
+  }
+
+  .formBar {
+    position: relative;
+    font-size: @textSize;
+  }
+
+  .icon-github {
+    position: absolute;
+    font-size: @formHeight + 10;
+    left: -55px;
+    color: black
   }
 
   input {
@@ -42,4 +54,22 @@
       background-color: #ff994d !important;
     }
   }
+
+  span {
+    // circled numbers
+    display: inline-block;
+    border: 2px solid @textColor;
+    border-radius: 27px;
+    width: 22px;
+    text-align: center;
+    font-size: 24px;
+  }
+
+  .expletation {
+    margin: 15px 0px;
+
+    p {
+      font-size: @textSize;
+    }
+  } 
 }

@@ -2,10 +2,25 @@
   @helper.requireJs(core = routes.Assets.at("js/require.js").url, module = routes.Assets.at("js/app.min").url)
 }
 
+@expletation(text: String, cls: String, number: String) = {
+  <div class="expletation @cls">
+    <p>
+      <span class="numberWithCircle">@number</span>
+      @text
+    </p>
+  </div>
+}
+
 @main("Git Evolve", js) {
 
   <div class="container indexInfo">
-    <input class="username" type="text" placeholder="username"> / <input class="repo" type="text" placeholder="repository">
-    <div class="alert error hide">The repository you have specified does not exist</div>
+    @expletation("Select a repository from GitHub", "one", "1")
+
+    <div class="formBar">
+      <i class="icon-github"></i>
+      <input class="username" type="text" placeholder="username"> / <input class="repo" type="text" placeholder="repository">
+      <div class="alert error hide">The repository you have specified does not exist</div>
+    </div>
+    @expletation("Watch it evolve!", "two", "2")
   </div>
 }

@@ -13,24 +13,34 @@ define ([
     },
 
     initialize: function() {
-      this.local = true;
-      this.username = null;
-      this.repo = null;
     },
 
     loadUser:  function(event) {
-      this.username = $(event.target).val()
+      var self = this;
+      var username = $(event.target).val()
 
-      if(this.repo != null) {
-        this.loadRepo()
-      }
+      this.model.setUsername(username, function(isValid) {
+        if(data) {
+          self.loadRepo()
+        } else {
+          // show user error
+          console.log("failed :(")
+        }
+      })
     },
 
     loadRepoName:  function(event) {
-      this.repo = $(event.target).val()
+      var self = this;
+      var repo = $(event.target).val()
 
-      if(this.username != null) {
-        this.loadRepo()
+      this.model.setRepo(repo, function(validUser, validRepo) {
+        if(validUser && validRepo) {
+          console.log("everythin good!")
+        } else if (validUser) {
+          // repo is invalid
+        } else {
+          // have to set valid username
+        }
       }
     },
 
@@ -39,7 +49,7 @@ define ([
       var repo = this.model.connect(this.username, this.repo)
 
       repo.show(function(err, repo) {
-        console.log(err)
+        console.log("ieht")
         if(err == null) {
           self.showRepo()
         } else {
@@ -49,8 +59,10 @@ define ([
     },
 
     showRepo: function() {
+      // hide errors
       $(this.el).find("input").css("border", "none")
       $(this.el).find(".alert").hide()
+      // load repo info
     },
 
     doestExist: function() {
