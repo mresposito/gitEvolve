@@ -38,10 +38,12 @@ define ([
           console.log("everythin good!")
         } else if (validUser) {
           // repo is invalid
+          console.log("invalid repo")
         } else {
           // have to set valid username
+          console.log("itnsoahe")
         }
-      }
+      })
     },
 
     loadRepo: function() {

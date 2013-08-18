@@ -66,7 +66,7 @@ define ([
           return repo.name
         })
       })
-      .fail(function() { self.repoNames = null }
+      .fail(function() { self.repoNames = null })
     }
 
   });
