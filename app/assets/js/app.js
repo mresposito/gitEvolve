@@ -2,7 +2,8 @@ require.config({
   paths: {
     jquery: "/assets/js/jquery-1.9.0.min",
     underscore: "/assets/js/underscore-min",
-    backbone: "/assets/js/backbone-min"
+    backbone: "/assets/js/backbone-min",
+    github: "/assets/js/github"
   },
   shim: {
     jquery: {
@@ -14,6 +15,9 @@ require.config({
     backbone: {
       deps: ["underscore"],
       exports: "Backbone"
+    },
+    github: {
+      exports: "Github"
     }
   }
 });

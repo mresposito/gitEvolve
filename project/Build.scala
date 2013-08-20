@@ -27,8 +27,8 @@ object ApplicationBuild extends Build {
       appJsLibDir <+= baseDirectory / "public/js",
       jasmineTestDir <+= baseDirectory / "test/assets/",
       jasmineConfFile <+= baseDirectory / "test/assets/test.dependencies.js",
-      // jasmineRequireJsFile <+= baseDirectory / "public/js/require.js",
-      // jasmineRequireConfFile <+= baseDirectory / "test/assets/require.conf.js",
+      jasmineRequireJsFile <+= baseDirectory / "public/js/require.js",
+      jasmineRequireConfFile <+= baseDirectory / "test/assets/require.conf.js",
 
       // link jasmine to the standard 'sbt test' action. 
       (test in Test) <<= (test in Test) dependsOn (jasmine))

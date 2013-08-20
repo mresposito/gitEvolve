@@ -5,8 +5,29 @@ require.config({
     specs:      EnvJasmine.specsDir,
 
     // Libraries
-    // FIXME: we don't want to depend on jQuery necessarily, but for
-    // now the sbt plugin requires it
-    jquery:     'lib/jquery-1.8.1'
+    jquery: EnvJasmine.libDir + "jquery-1.9.0.min",
+    underscore: EnvJasmine.libDir + "underscore-min",
+    backbone: EnvJasmine.libDir + "backbone-min",
+    github: EnvJasmine.libDir + "github",
+    mockjax: EnvJasmine.libDir + "jquery.mockjax",
+  },
+  shim: {
+    jquery: {
+      exports: "$"
+    },
+    underscore: {
+      exports: "_"
+    },
+    backbone: {
+      deps: ["underscore"],
+      exports: "Backbone"
+    },
+    github: {
+      exports: "Github"
+    },
+    mockjax: {
+      deps: ["jquery"],
+      exports: "Mockjax"
+    }
   }
 });

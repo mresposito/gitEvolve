@@ -1,14 +1,19 @@
 define ([
   "jquery",
   "underscore",
-  "backbone"
-], function($, _, Backbone) {
+  "backbone",
+  "github"
+], function($, _, Backbone, Github) {
 
   var githubBase = "https://api.github.com/"
 
   return Backbone.Model.extend({
     defaults: {
       options: {}
+    },
+
+    userUrl: function(username) {
+      return githubBase + "users/" + username
     },
 
     initialize: function() {
@@ -18,9 +23,9 @@ define ([
       this.repoNames = null
     },
 
-    connect: function(user, repo) {
-      this.repo = this.github.getRepo(user, repo)
-      return this.repo
+    connect: function(callback) {
+      this.repo = this.github.getRepo(this.username, this.repo)
+      return this.repo !== null
     },
 
     /**
@@ -30,14 +35,15 @@ define ([
     setUsername: function(username, callback) {
       var self = this;
       this.username = username;
-      var requestURL = githubBase + "users/" + username
+      var requestURL = this.userUrl(username)
 
       $.getJSON(requestURL, function(data) {
-        self.loadRespoNamesFormUsers(data.repos)
+        self.loadRepoNamesFormUsers(data.repos)
         self.validUser = true;
         callback(true)
       })
-      .fail(function() { 
+      .fail(function(err) { 
+        console.log(JSON.stringify(err))
         self.validUser = false;
         callback(false) 
       })
@@ -58,7 +64,7 @@ define ([
       
     },
 
-    loadRespoNamesFormUsers: function(reposUrl) {
+    loadRepoNamesFormUsers: function(reposUrl) {
       var self = this;
 
       $.getJSON(reposUrl, function(data) {

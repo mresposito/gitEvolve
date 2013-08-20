@@ -6,5 +6,5 @@ import sbt._
 // in Build.scala, and then set the settings and configuration for Sbt-Jasmine
 object Plugins extends Build {
   lazy val plugins = Project("plugins", file("."))
-    .dependsOn(uri("git://github.com/guardian/sbt-jasmine-plugin.git#0.7"))
+    .dependsOn(uri("git://github.com/mresposito/sbt-jasmine-plugin.git#0.7"))
 }

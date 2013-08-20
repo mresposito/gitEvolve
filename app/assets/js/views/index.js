@@ -20,11 +20,12 @@ define ([
       var username = $(event.target).val()
 
       this.model.setUsername(username, function(isValid) {
-        if(data) {
+        if(isValid) {
+          self.hideUserNameError()
           self.loadRepo()
         } else {
           // show user error
-          console.log("failed :(")
+          self.showUserNameError()
         }
       })
     },
@@ -35,7 +36,7 @@ define ([
 
       this.model.setRepo(repo, function(validUser, validRepo) {
         if(validUser && validRepo) {
-          console.log("everythin good!")
+          self.loadRepo()
         } else if (validUser) {
           // repo is invalid
           console.log("invalid repo")
@@ -48,20 +49,26 @@ define ([
 
     loadRepo: function() {
       var self = this
-      var repo = this.model.connect(this.username, this.repo)
-
-      repo.show(function(err, repo) {
-        console.log("ieht")
-        if(err == null) {
+      this.model.connect(function(success) {
+        if(success) {
           self.showRepo()
         } else {
-          self.doestExist()
+          console.log("could not connect")
         }
       })
     },
 
+    showUserNameError: function() {
+      $(this.el).find(".userError").show()
+      $(this.el).find("input.username").css("border", "2px solid red")
+    },
+
+    hideUserNameError: function() {
+      $(this.el).find(".userError").hide()
+      $(this.el).find("input.username").css("border", "none")
+    },
+
     showRepo: function() {
-      // hide errors
       $(this.el).find("input").css("border", "none")
       $(this.el).find(".alert").hide()
       // load repo info
