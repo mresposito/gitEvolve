@@ -28,52 +28,21 @@ define ([
       return this.repo !== null
     },
 
-    /**
-     * returns true if the username exists
-     * starts loading the repositories of the user
-     */
-    setUsername: function(username, callback) {
+    setRepo: function(username, repo, callback) {
       var self = this;
+      var requestURL = githubBase + "repos/" + username + "/" + repo;
+      this.repo = repo;
       this.username = username;
-      var requestURL = this.userUrl(username)
 
+      // try to fetch the repo
       $.getJSON(requestURL, function(data) {
-        self.loadRepoNamesFormUsers(data.repos)
-        self.validUser = true;
+        self.validRepo = true
         callback(true)
       })
       .fail(function(err) { 
-        console.log(JSON.stringify(err))
-        self.validUser = false;
+        self.validRepo = false;
         callback(false) 
       })
-    },
-
-    setRepo: function(repo, callback) {
-      var self = this;
-      this.repo = repo;
-
-      if(this.validUser && this.repoNames != null) {
-        var result = _.find(this.repoNames, function (name) {
-          return name === repo;
-        })
-        callback(true, result != undefined)
-      }
-      // if(repoNames != null) {
-      // }
-      
-    },
-
-    loadRepoNamesFormUsers: function(reposUrl) {
-      var self = this;
-
-      $.getJSON(reposUrl, function(data) {
-        self.repoNames = _.map(data, function(repo) {
-          return repo.name
-        })
-      })
-      .fail(function() { self.repoNames = null })
     }
-
   });
 });

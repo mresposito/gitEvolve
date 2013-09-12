@@ -8,47 +8,39 @@ define ([
   return Backbone.View.extend({
 
     events: {
-      "change .username": "loadUser",
-      "click .repo": "loadRepoName"
+      "change .username": "loadRepo",
+      "change .repo": "loadRepo"
     },
 
     initialize: function() {
     },
 
-    loadUser:  function(event) {
+    loadRepo: function () {
       var self = this;
-      var username = $(event.target).val()
+      this.username = $(this.el).find(".username").val()
+      this.repo = $(this.el).find(".repo").val()
 
-      this.model.setUsername(username, function(isValid) {
-        if(isValid) {
-          self.hideUserNameError()
-          self.loadRepo()
-        } else {
-          // show user error
-          self.showUserNameError()
-        }
-      })
+      if(this.username && this.repo) {
+        // load from the model
+        this.model.setRepo(this.username, this.repo, function(success) {
+          if(success) {
+            self.hideRepoError()
+            self.loadRepoView()
+          } else {
+            self.showRepoError()
+          }
+        });
+      } else {
+        // has not filled the data
+        console.log("invalid")
+      }
     },
 
-    loadRepoName:  function(event) {
-      var self = this;
-      var repo = $(event.target).val()
-
-      this.model.setRepo(repo, function(validUser, validRepo) {
-        if(validUser && validRepo) {
-          self.loadRepo()
-        } else if (validUser) {
-          // repo is invalid
-          console.log("invalid repo")
-        } else {
-          // have to set valid username
-          console.log("itnsoahe")
-        }
+    loadRepoView: function() {
+      this.repoView = new RepoView({
+        model: this.model,
+        el: $(this.el).find(".repoContainer")
       })
-    },
-
-    loadRepo: function() {
-      var self = this
       this.model.connect(function(success) {
         if(success) {
           self.showRepo()
@@ -58,25 +50,34 @@ define ([
       })
     },
 
+    showRepoError: function() {
+      this.showInputError(".repoError", "repo") 
+    },
+
     showUserNameError: function() {
-      $(this.el).find(".userError").show()
-      $(this.el).find("input.username").css("border", "2px solid red")
+      this.showInputError(".userError", "username")
+    },
+
+    showInputError: function(tag, type) {
+      $(this.el).find(tag).show()
+      $(this.el).find("input." + type).css("border", "2px solid red")
+    },
+
+    hideRepoError: function () {
+      this.hideInputError(".repoError", "repo")
     },
 
     hideUserNameError: function() {
-      $(this.el).find(".userError").hide()
-      $(this.el).find("input.username").css("border", "none")
+      this.hideInputError(".userError", "username")
+    },
+
+    hideInputError: function(tag, type) {
+      $(this.el).find(tag).hide()
+      $(this.el).find("input." + type).css("border", "none")
     },
 
     showRepo: function() {
-      $(this.el).find("input").css("border", "none")
-      $(this.el).find(".alert").hide()
       // load repo info
-    },
-
-    doestExist: function() {
-      $(this.el).find("input").css("border", "2px solid red")
-      $(this.el).find(".alert").show()
     }
   });
 });
