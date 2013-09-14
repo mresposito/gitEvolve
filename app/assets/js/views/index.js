@@ -13,6 +13,7 @@ define ([
     },
 
     initialize: function() {
+      this.loadRepo(); // check if user has reloaded the page
     },
 
     loadRepo: function () {
@@ -25,59 +26,38 @@ define ([
         this.model.setRepo(this.username, this.repo, function(success) {
           if(success) {
             self.hideRepoError()
-            self.loadRepoView()
+            self.showRepo()
           } else {
             self.showRepoError()
           }
         });
-      } else {
-        // has not filled the data
-        console.log("invalid")
       }
     },
 
-    loadRepoView: function() {
-      this.repoView = new RepoView({
-        model: this.model,
-        el: $(this.el).find(".repoContainer")
-      })
-      this.model.connect(function(success) {
-        if(success) {
-          self.showRepo()
-        } else {
-          console.log("could not connect")
-        }
-      })
-    },
-
     showRepoError: function() {
-      this.showInputError(".repoError", "repo") 
-    },
-
-    showUserNameError: function() {
-      this.showInputError(".userError", "username")
-    },
-
-    showInputError: function(tag, type) {
-      $(this.el).find(tag).show()
-      $(this.el).find("input." + type).css("border", "2px solid red")
+      $(this.el).find(".repoError").show()
+      $(this.el).find(".formBar input").css("border", "2px solid red")
     },
 
     hideRepoError: function () {
-      this.hideInputError(".repoError", "repo")
-    },
-
-    hideUserNameError: function() {
-      this.hideInputError(".userError", "username")
-    },
-
-    hideInputError: function(tag, type) {
-      $(this.el).find(tag).hide()
-      $(this.el).find("input." + type).css("border", "none")
+      $(this.el).find(".repoError").hide()
+      $(this.el).find(".formBar input").css("border", "none")
     },
 
     showRepo: function() {
-      // load repo info
+      var self = this;
+      this.model.getCommits(function(commits) {
+        if(commits) {
+          console.log("commits!")
+          self.showCommit(commits[0])
+        } else {
+          console.log("no commits :(");
+        }
+      });
+    },
+
+    showCommit: function(sha) {
+      // TODO
     }
   });
 });

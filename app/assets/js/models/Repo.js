@@ -21,6 +21,7 @@ define ([
       this.validUser = false;
       this.validRepo = false;
       this.repoNames = null
+      this.branch = "master"; // TODO: make user load branches
     },
 
     connect: function(callback) {
@@ -30,19 +31,29 @@ define ([
 
     setRepo: function(username, repo, callback) {
       var self = this;
-      var requestURL = githubBase + "repos/" + username + "/" + repo;
+      this.baseURL = githubBase + "repos/" + username + "/" + repo;
       this.repo = repo;
       this.username = username;
 
       // try to fetch the repo
-      $.getJSON(requestURL, function(data) {
+      $.getJSON(this.baseURL, function(data) {
         self.validRepo = true
         callback(true)
+        self.connect(); // TODO: one call for connecting
       })
       .fail(function(err) { 
         self.validRepo = false;
         callback(false) 
       })
+    },
+
+    getCommits: function(callback) {
+      var requestURL = this.baseURL + "/commits";
+      console.log(requestURL)
+      $.getJSON(requestURL, callback)
+        .fail(function(err) {
+          console.log("booh")
+        });
     }
   });
 });
