@@ -1,9 +1,10 @@
 define ([
   "jquery",
+  "ui",
   "underscore",
   "backbone",
   "models/Repo"
-], function($, _, Backbone, Repo) {
+], function($, UI, _, Backbone, Repo) {
 
   return Backbone.View.extend({
 
@@ -64,6 +65,7 @@ define ([
       var $canvas = $(this.el).find(".canvas");
       $canvas.show();
       $canvas.find(".numberCommits b").text(commits.length);
+      $canvas.find(".slider").slider();
     },
 
     showCommit: function(commit) {
