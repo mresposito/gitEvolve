@@ -13,6 +13,10 @@ define ([
     },
 
     initialize: function() {
+      // TODO: remove for ease of test
+      $(this.el).find(".username").val("mresposito")
+      $(this.el).find(".repo").val("myCV")
+
       this.loadRepo(); // check if user has reloaded the page
     },
 
@@ -48,16 +52,25 @@ define ([
       var self = this;
       this.model.getCommits(function(commits) {
         if(commits) {
-          console.log("commits!")
-          self.showCommit(commits[0])
+          self.showRepoInfo(commits);
+          self.showCommit(commits[0].commit);
         } else {
           console.log("no commits :(");
         }
       });
     },
 
-    showCommit: function(sha) {
-      // TODO
+    showRepoInfo: function(commits) {
+      var $canvas = $(this.el).find(".canvas");
+      $canvas.show();
+      $canvas.find(".numberCommits b").text(commits.length);
+    },
+
+    showCommit: function(commit) {
+      var $canvas = $(this.el).find(".canvas");
+      // load info
+      $canvas.find(".currentCommit b").text(commit.author.name);
+      $canvas.find(".currentCommit span").text(commit.message);
     }
   });
 });
