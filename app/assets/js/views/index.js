@@ -10,13 +10,14 @@ define ([
 
     events: {
       "change .username": "loadRepo",
-      "change .repo": "loadRepo"
+      "change .repo": "loadRepo",
+      "click .controlAction" : "mediaControl"
     },
 
     initialize: function() {
       // TODO: remove for ease of test
       $(this.el).find(".username").val("mresposito")
-      $(this.el).find(".repo").val("myCV")
+      $(this.el).find(".repo").val("gitEvolve")
 
       this.loadRepo(); // check if user has reloaded the page
     },
@@ -53,8 +54,9 @@ define ([
       var self = this;
       this.model.getCommits(function(commits) {
         if(commits) {
+          self. commits = commits.reverse();
           self.showRepoInfo(commits);
-          self.showCommit(commits[0].commit);
+          self.showCommit(0);
         } else {
           console.log("no commits :(");
         }
@@ -62,17 +64,51 @@ define ([
     },
 
     showRepoInfo: function(commits) {
+      var self = this;
+
       var $canvas = $(this.el).find(".canvas");
       $canvas.show();
       $canvas.find(".numberCommits b").text(commits.length);
-      $canvas.find(".slider").slider();
+      var $slider = $canvas.find(".slider");
+      $slider.slider({
+        min: 0,
+        max: commits.length - 1,
+        step: 1,
+        change: function(index) {
+          var index = $slider.slider("value");
+          self.showCommit(index);
+        }
+      });
     },
 
-    showCommit: function(commit) {
+    showCommit: function(index) {
+      var commit = this.commits[index].commit;
       var $canvas = $(this.el).find(".canvas");
       // load info
       $canvas.find(".currentCommit b").text(commit.author.name);
-      $canvas.find(".currentCommit span").text(commit.message);
+      $canvas.find(".currentCommit .message").text(commit.message);
+      $canvas.find(".currentCommit .numberCommits").text(index + 1);
+
+      console.log(this.commits[index]);
+    },
+
+    mediaControl: function(event) {
+      var $target = $(event.target);
+      var $slider = $(this.el).find(".slider");
+
+      if($target.hasClass("icon-fast-forward")) {
+        // go to 0
+      } else if($target.hasClass("icon-fast-backward")) {
+        // go to the end
+      } else if($target.hasClass("icon-play")) {
+        $(this.el).find(".icon-pause").show();
+        $(this.el).find(".icon-play").hide();
+        // start animation
+        $(this.el).find(".slider").slider("option", "animate", "slow");
+      } else {
+        $(this.el).find(".icon-play").show();
+        $(this.el).find(".icon-pause").hide();
+      }
     }
   });
 });

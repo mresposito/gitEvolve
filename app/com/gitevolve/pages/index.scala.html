@@ -27,9 +27,17 @@
   </div>
   <div class="container canvas hide">
       <div class="info row">
-        <div class="numberCommits span4 offset2"> 
+        <div class="numberCommits offset1 span3"> 
           <p><b>500</b> commits</p>
         </div>
+
+        <div class="controls text-center span4">
+          <a class="controlAction"><i class="icon-fast-backward"></i></a>
+          <a class="controlAction"><i class="icon-play"></i></a>
+          <a class="controlAction"><i class="icon-pause hide"></i></a>
+          <a class="controlAction"><i class="icon-fast-forward"></i></a>
+        </div>
+
         <div class="span4">
           <p>
           branch: <b>master</b>
@@ -37,19 +45,12 @@
         </div>
       </div>
 
-      <div class="currentCommit offset2">
+      <div class="slider center span10"></div>
+
+      <div class="currentCommit text-center">
         <p>
-          <b>mresposito</b>: <span>whatup dough?</span>
+          <span class="numberWithCircle numberCommits">40</span><b class="author">mresposito</b>: <span class="message">whatup dough?</span>
         </p>
-      </div>
-
-      <div class="slider span10">
-      </div><br>
-
-      <div class="controls text-center">
-        <i class="icon-fast-backward"></i>
-        <i class="icon-play"></i>
-        <i class="icon-fast-forward"></i>
       </div>
     </div>
   </div>

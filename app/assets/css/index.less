@@ -55,16 +55,6 @@
     }
   }
 
-  span {
-    // circled numbers
-    display: inline-block;
-    border: 2px solid @textColor;
-    border-radius: 27px;
-    width: 22px;
-    text-align: center;
-    font-size: 24px;
-  }
-
   .expletation {
     margin: 15px 0px;
 
@@ -74,13 +64,43 @@
   } 
 }
 
+.numberWithCircle {
+  // circled numbers
+  display: inline-block;
+  border: 2px solid;
+  border-radius: 29px;
+  width: 24px;
+  text-align: center;
+}
+
 .canvas {
 
   font-size: @textSize - 8;
   background-color: @repoBody;
   border-radius: 2px;
+  padding: 8px;
+
   .controls {
-    font-size: 24px;
-    // margin:
+    font-size: 25px;
+    margin-top: 5px;
+    i {
+      margin: 5px;
+    }
+    a {
+      color: black;
+      &:hover {
+        cursor: hand;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .author {
+    margin-left: 4px;
+  }
+
+  .slider {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }
