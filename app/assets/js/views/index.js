@@ -82,6 +82,8 @@ define ([
     },
 
     showCommit: function(index) {
+      var self = this;
+
       var commit = this.commits[index].commit;
       var $canvas = $(this.el).find(".canvas");
       // load info
@@ -89,7 +91,29 @@ define ([
       $canvas.find(".currentCommit .message").text(commit.message);
       $canvas.find(".currentCommit .numberCommits").text(index + 1);
 
-      console.log(this.commits[index]);
+      $.getJSON(commit.tree.url, function(json) {
+        self.displayTree(json);
+      });
+    },
+
+    displayTree: function(json) {
+      var self = this,
+        $container = $(this.el).find(".treeCanvas");
+      $container.html("");
+
+      _.each(json.tree, function(item) {
+        self.displayObject(item, $container);
+      });
+    },
+
+    displayObject: function(item, $container) {
+      var icon = "folder-close";
+      if(item.type === "blob") {
+        icon = "file-text";
+      }
+      $container.prepend(
+        _.template('<div class="object"><i class="icon-<%= icon %>"></i><a href="#"><%= path %><span></span></a></div>',
+          {path: item.path, icon: icon}));
     },
 
     mediaControl: function(event) {
@@ -104,7 +128,6 @@ define ([
         $(this.el).find(".icon-pause").show();
         $(this.el).find(".icon-play").hide();
         // start animation
-        $(this.el).find(".slider").slider("option", "animate", "slow");
       } else {
         $(this.el).find(".icon-play").show();
         $(this.el).find(".icon-pause").hide();
